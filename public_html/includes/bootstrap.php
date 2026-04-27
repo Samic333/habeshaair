@@ -15,16 +15,11 @@ if (!file_exists($configPath)) {
 }
 $CONFIG = require $configPath;
 
-// Error reporting based on env
-if (($CONFIG['app']['env'] ?? 'production') === 'development') {
-    error_reporting(E_ALL);
-    ini_set('display_errors', '1');
-} else {
-    error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT);
-    ini_set('display_errors', '0');
-    ini_set('log_errors', '1');
-    ini_set('error_log', __DIR__ . '/../logs/php-errors.log');
-}
+// Error reporting (TEMP DEBUG: always show errors to surface deploy issue)
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+ini_set('log_errors', '1');
+@ini_set('error_log', __DIR__ . '/../logs/php-errors.log');
 
 date_default_timezone_set($CONFIG['app']['timezone'] ?? 'UTC');
 
