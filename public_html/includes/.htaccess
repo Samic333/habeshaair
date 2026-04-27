@@ -1,0 +1,2 @@
+# includes/.htaccess — block direct web access to PHP partials & config
+Require all denied
