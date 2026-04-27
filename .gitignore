@@ -1,0 +1,33 @@
+# Real config (gitignored on server, sample is committed)
+public_html/includes/config.php
+
+# Logs (folder kept via .gitkeep but contents ignored)
+public_html/logs/*
+!public_html/logs/.gitkeep
+!public_html/logs/.htaccess
+*.log
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# Should never come back
+node_modules/
+.next/
+app_temp/
+package-lock.json
+yarn.lock
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Backups / test artifacts
+*.bak
+*.tmp
+*.orig
