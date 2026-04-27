@@ -29,7 +29,7 @@ if ($m['status'] === 'New') {
 }
 
 $saved = flash_get('saved');
-$adminTitle = 'Message — HabeshaAir admin';
+$adminTitle = 'Message — HabeshAir admin';
 $activeNav  = 'messages';
 include __DIR__ . '/includes/admin-header.php';
 ?>

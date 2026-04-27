@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     redirect($next);
 }
 
-$adminTitle = 'Admin sign in — HabeshaAir';
+$adminTitle = 'Admin sign in — HabeshAir';
 $activeNav  = '';
 ?><!doctype html>
 <html lang="en">
@@ -52,7 +52,7 @@ $activeNav  = '';
 <main class="admin-login-wrap">
   <div class="admin-login-card">
     <h1 style="margin-bottom:.25em">Admin sign in</h1>
-    <p style="color:var(--gray-600); margin:0 0 1.5rem">HabeshaAir operations console</p>
+    <p style="color:var(--gray-600); margin:0 0 1.5rem">HabeshAir operations console</p>
 
     <?php if ($error): ?>
       <div class="alert alert-error"><?= e($error) ?></div>

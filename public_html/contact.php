@@ -73,8 +73,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $page = [
-    'title'       => 'Contact HabeshaAir — Charter Coordination 24/7',
-    'description' => 'Reach HabeshaAir 24/7 for charter coordination. Email, WhatsApp, or send a message via the contact form.',
+    'title'       => 'Contact HabeshAir — Charter Coordination 24/7',
+    'description' => 'Reach HabeshAir 24/7 for charter coordination. Email, WhatsApp, or send a message via the contact form.',
     'canonical'   => url('/contact.php'),
     'schema'      => 'contactpage',
     'active_nav'  => 'contact',

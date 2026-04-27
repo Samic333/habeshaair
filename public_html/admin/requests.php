@@ -47,7 +47,7 @@ $stmt = db()->prepare(
 $stmt->execute($params);
 $rows = $stmt->fetchAll();
 
-$adminTitle = 'Charter requests — HabeshaAir admin';
+$adminTitle = 'Charter requests — HabeshAir admin';
 $activeNav  = 'requests';
 include __DIR__ . '/includes/admin-header.php';
 

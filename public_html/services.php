@@ -2,7 +2,7 @@
 require_once __DIR__ . '/includes/bootstrap.php';
 
 $page = [
-    'title'       => 'Charter Services — VIP, Cargo, Humanitarian & Medevac | HabeshaAir',
+    'title'       => 'Charter Services — VIP, Cargo, Humanitarian & Medevac | HabeshAir',
     'description' => 'Air charter services across Africa and the Middle East: VIP private travel, cargo, humanitarian relief, emergency medevac, and group flights.',
     'canonical'   => url('/services.php'),
     'schema'      => 'service',
@@ -94,7 +94,7 @@ include __DIR__ . '/includes/header.php';
 <section class="section section-band-light">
   <div class="container prose text-center">
     <p class="eyebrow">A note on availability</p>
-    <p>Final aircraft availability, pricing, and operational approval depend on the licensed operator, regulatory permissions, route, airport handling, and safety considerations. HabeshaAir coordinates requests and proposes options; the operator confirms the flight.</p>
+    <p>Final aircraft availability, pricing, and operational approval depend on the licensed operator, regulatory permissions, route, airport handling, and safety considerations. HabeshAir coordinates requests and proposes options; the operator confirms the flight.</p>
   </div>
 </section>
 

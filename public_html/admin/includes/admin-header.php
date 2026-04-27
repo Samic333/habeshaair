@@ -1,5 +1,5 @@
 <?php
-$adminTitle = $adminTitle ?? 'Admin — HabeshaAir';
+$adminTitle = $adminTitle ?? 'Admin — HabeshAir';
 $me = current_admin();
 ?><!doctype html>
 <html lang="en">

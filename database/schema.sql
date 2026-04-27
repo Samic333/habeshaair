@@ -1,4 +1,4 @@
--- HabeshaAir — initial schema
+-- HabeshAir — initial schema
 -- Import via cPanel phpMyAdmin or MySQL CLI:
 --   mysql -u <user> -p <database> < schema.sql
 -- After import, replace the placeholder admin password hash. See database/README.md.
@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS admin_users (
 INSERT INTO admin_users (username, email, password_hash, display_name, is_active)
 VALUES ('admin', 'info@habeshair.com',
         '$2y$12$REPLACE_WITH_REAL_BCRYPT_HASH_GENERATED_BY_PASSWORD_HASH',
-        'HabeshaAir Admin', 1)
+        'HabeshAir Admin', 1)
 ON DUPLICATE KEY UPDATE username = username;
 
 SET FOREIGN_KEY_CHECKS = 1;

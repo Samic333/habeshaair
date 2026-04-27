@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/includes/bootstrap.php';
 $page = [
-    'title'       => 'Message sent — HabeshaAir',
+    'title'       => 'Message sent — HabeshAir',
     'description' => 'Your message has been received. A coordinator will be in touch shortly.',
     'canonical'   => url('/contact-success.php'),
     'schema'      => 'organization',

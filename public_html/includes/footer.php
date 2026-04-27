@@ -8,7 +8,7 @@
     </div>
     <div class="contact-strip-actions">
       <a href="/request.php" class="btn btn-gold">Request a Charter</a>
-      <a href="<?= e(whatsapp_link('Hello HabeshaAir, I would like a charter quote.')) ?>" class="btn btn-outline-light" target="_blank" rel="noopener">
+      <a href="<?= e(whatsapp_link('Hello HabeshAir, I would like a charter quote.')) ?>" class="btn btn-outline-light" target="_blank" rel="noopener">
         WhatsApp <?= e(cfg('app.whatsapp_display')) ?>
       </a>
     </div>
@@ -22,7 +22,7 @@
         <span class="brand-mark" aria-hidden="true">
           <svg viewBox="0 0 32 32" width="28" height="28"><path d="M16 3 L20 14 L31 16 L20 18 L16 29 L12 18 L1 16 L12 14 Z" fill="currentColor"/></svg>
         </span>
-        <span class="brand-name">Habesha<span class="brand-accent">Air</span></span>
+        <span class="brand-name">Habesh<span class="brand-accent">Air</span></span>
       </a>
       <p class="footer-tagline">Premium air charter coordination across Africa, the Middle East, and beyond.</p>
     </div>

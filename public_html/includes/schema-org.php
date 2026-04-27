@@ -11,7 +11,7 @@ function render_schema_org(): void {
     $org  = [
         '@context' => 'https://schema.org',
         '@type'    => 'Organization',
-        'name'     => (string)cfg('app.company', 'HabeshaAir'),
+        'name'     => (string)cfg('app.company', 'HabeshAir'),
         'url'      => $base,
         'logo'     => $base . '/assets/images/logo.svg',
         'email'    => (string)cfg('app.email', 'info@habeshair.com'),
@@ -37,7 +37,7 @@ function render_schema_org(): void {
         $blocks[] = [
             '@context' => 'https://schema.org',
             '@type'    => 'ContactPage',
-            'name'     => 'Contact HabeshaAir',
+            'name'     => 'Contact HabeshAir',
             'url'      => $base . '/contact.php',
         ];
         $blocks[] = [

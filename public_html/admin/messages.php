@@ -20,7 +20,7 @@ $stmt = db()->prepare("SELECT id, full_name, email, subject, status, created_at 
 $stmt->execute($params);
 $rows = $stmt->fetchAll();
 
-$adminTitle = 'Messages — HabeshaAir admin';
+$adminTitle = 'Messages — HabeshAir admin';
 $activeNav  = 'messages';
 include __DIR__ . '/includes/admin-header.php';
 ?>

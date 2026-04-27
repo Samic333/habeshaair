@@ -159,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $page = [
-    'title'       => 'Request a Charter — HabeshaAir',
+    'title'       => 'Request a Charter — HabeshAir',
     'description' => 'Request a VIP, cargo, humanitarian, medevac, or group charter flight. Quotes typically returned within 60 minutes.',
     'canonical'   => url('/request.php'),
     'schema'      => 'service',
@@ -350,7 +350,7 @@ function checkedIf($cond): string { return $cond ? ' checked' : ''; }
         <div class="form-group">
           <label class="checkbox-row">
             <input type="checkbox" name="consent" value="1"<?= checkedIf(!empty($old['consent'])) ?>>
-            <span>I agree to the <a href="/privacy.php">Privacy Policy</a> and authorize HabeshaAir to contact me about this request.</span>
+            <span>I agree to the <a href="/privacy.php">Privacy Policy</a> and authorize HabeshAir to contact me about this request.</span>
           </label>
           <?= err('consent', $errors) ?>
         </div>

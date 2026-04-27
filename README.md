@@ -1,4 +1,4 @@
-# HabeshaAir.com
+# HabeshAir.com
 
 Premium air charter brokerage platform for Africa, the Middle East, and beyond.
 Custom PHP 8 site for Namecheap cPanel shared hosting. No Node.js, no build step.
@@ -41,7 +41,7 @@ Open `http://localhost:8000/`. Admin: `http://localhost:8000/admin/login.php`.
 ## Project structure
 
 ```
-HabeshaAir/
+HabeshAir/
 ├── .cpanel.yml                # cPanel git auto-deploy script
 ├── database/
 │   ├── schema.sql             # CREATE TABLEs + seed admin
@@ -62,5 +62,5 @@ HabeshaAir/
 - Domain (single 'a'): habeshair.com
 - Admin email: info@habeshair.com
 - WhatsApp: +1 (480) 915-9971
-- Operator language: "HabeshaAir arranges flights on behalf of its clients with
+- Operator language: "HabeshAir arranges flights on behalf of its clients with
   FAA Certified Part 135 air carriers or foreign equivalents."

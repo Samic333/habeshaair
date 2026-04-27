@@ -2,8 +2,8 @@
 require_once __DIR__ . '/includes/bootstrap.php';
 
 $page = [
-    'title'       => 'HabeshaAir — Premium Air Charter Africa & Beyond',
-    'description' => 'HabeshaAir coordinates premium VIP, cargo, humanitarian, and emergency charter flights across Africa, the Middle East, and beyond. Quotes within 60 minutes.',
+    'title'       => 'HabeshAir — Premium Air Charter Africa & Beyond',
+    'description' => 'HabeshAir coordinates premium VIP, cargo, humanitarian, and emergency charter flights across Africa, the Middle East, and beyond. Quotes within 60 minutes.',
     'canonical'   => url('/'),
     'schema'      => 'home',
     'active_nav'  => 'home',
@@ -31,7 +31,7 @@ include __DIR__ . '/includes/header.php';
     <div class="text-center prose" style="margin-bottom:2.5rem">
       <p class="eyebrow">What we do</p>
       <h2>Charter solutions for time-critical, complex, and high-value missions</h2>
-      <p class="lede">HabeshaAir coordinates flights with FAA Certified Part 135 air carriers and foreign equivalents. Through trusted aviation partners, we offer access to over 5,000 aircraft worldwide.</p>
+      <p class="lede">HabeshAir coordinates flights with FAA Certified Part 135 air carriers and foreign equivalents. Through trusted aviation partners, we offer access to over 5,000 aircraft worldwide.</p>
     </div>
 
     <div class="grid grid-3">
@@ -96,7 +96,7 @@ include __DIR__ . '/includes/header.php';
   <div class="container">
     <div class="grid grid-2" style="align-items:center">
       <div>
-        <p class="eyebrow">Why HabeshaAir</p>
+        <p class="eyebrow">Why HabeshAir</p>
         <h2>Speed and clarity, every step.</h2>
         <p class="lede">From your first message to engines on, we keep the request moving. Our network gives us options on short notice; our process keeps you informed.</p>
         <ul class="list-check">

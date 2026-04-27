@@ -2,8 +2,8 @@
 require_once __DIR__ . '/includes/bootstrap.php';
 
 $page = [
-    'title'       => 'How It Works — Charter Request to Wheels-Up | HabeshaAir',
-    'description' => 'How HabeshaAir coordinates a charter from your first message to engines on. Four clear steps, with timelines.',
+    'title'       => 'How It Works — Charter Request to Wheels-Up | HabeshAir',
+    'description' => 'How HabeshAir coordinates a charter from your first message to engines on. Four clear steps, with timelines.',
     'canonical'   => url('/how-it-works.php'),
     'schema'      => 'organization',
     'active_nav'  => 'how',

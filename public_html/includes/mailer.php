@@ -11,7 +11,7 @@
 function send_admin_notification(string $subject, string $textBody, string $htmlBody = ''): bool {
     $to       = (string)cfg('mail.admin_to', cfg('app.email', 'info@habeshair.com'));
     $fromAddr = (string)cfg('mail.from_email', 'no-reply@habeshair.com');
-    $fromName = (string)cfg('mail.from_name', cfg('app.company', 'HabeshaAir'));
+    $fromName = (string)cfg('mail.from_name', cfg('app.company', 'HabeshAir'));
     $driver   = (string)cfg('mail.driver', 'mail');
 
     if ($driver === 'smtp' && _phpmailer_available()) {
@@ -25,7 +25,7 @@ function _send_via_mail(string $to, string $fromAddr, string $fromName, string $
     $headers  = [];
     $headers[] = 'From: ' . sprintf('"%s" <%s>', addslashes($fromName), $fromAddr);
     $headers[] = 'Reply-To: ' . $fromAddr;
-    $headers[] = 'X-Mailer: HabeshaAir/PHP';
+    $headers[] = 'X-Mailer: HabeshAir/PHP';
     $headers[] = 'MIME-Version: 1.0';
 
     if ($html !== '') {

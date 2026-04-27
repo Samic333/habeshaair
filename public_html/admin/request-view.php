@@ -30,7 +30,7 @@ if (!$req) redirect('/admin/requests.php');
 
 $saved = flash_get('saved');
 
-$adminTitle = 'Request ' . $req['reference_code'] . ' — HabeshaAir admin';
+$adminTitle = 'Request ' . $req['reference_code'] . ' — HabeshAir admin';
 $activeNav  = 'requests';
 include __DIR__ . '/includes/admin-header.php';
 

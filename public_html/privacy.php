@@ -1,8 +1,8 @@
 <?php
 require_once __DIR__ . '/includes/bootstrap.php';
 $page = [
-    'title'       => 'Privacy Policy — HabeshaAir',
-    'description' => 'How HabeshaAir collects, uses, and protects information you provide when requesting a charter quote.',
+    'title'       => 'Privacy Policy — HabeshAir',
+    'description' => 'How HabeshAir collects, uses, and protects information you provide when requesting a charter quote.',
     'canonical'   => url('/privacy.php'),
     'schema'      => 'organization',
 ];

@@ -5,14 +5,14 @@ $ref = (string)($_GET['ref'] ?? '');
 if ($ref === '' || !preg_match('/^HA-[A-Z0-9-]+$/', $ref)) $ref = 'HA-PENDING';
 
 $page = [
-    'title'       => 'Request received — HabeshaAir',
+    'title'       => 'Request received — HabeshAir',
     'description' => 'Your charter request has been received. A coordinator will be in touch shortly.',
     'canonical'   => url('/request-success.php'),
     'schema'      => 'organization',
 ];
 include __DIR__ . '/includes/header.php';
 
-$wa = whatsapp_link("Hello HabeshaAir, I just submitted a charter request. Reference: $ref");
+$wa = whatsapp_link("Hello HabeshAir, I just submitted a charter request. Reference: $ref");
 ?>
 
 <section class="section">

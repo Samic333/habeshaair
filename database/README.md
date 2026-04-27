@@ -1,4 +1,4 @@
-# Database — HabeshaAir
+# Database — HabeshAir
 
 Three tables: `charter_requests`, `contact_messages`, `admin_users`.
 MySQL 5.7+ / 8.0 / MariaDB 10.4+. Charset `utf8mb4`, engine InnoDB.

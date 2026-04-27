@@ -2,7 +2,7 @@
 require_once __DIR__ . '/includes/bootstrap.php';
 http_response_code(404);
 $page = [
-    'title'       => 'Page not found — HabeshaAir',
+    'title'       => 'Page not found — HabeshAir',
     'description' => 'The page you were looking for could not be found.',
     'canonical'   => url('/'),
     'schema'      => 'organization',

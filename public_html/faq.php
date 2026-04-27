@@ -2,8 +2,8 @@
 require_once __DIR__ . '/includes/bootstrap.php';
 
 $faq = [
-    ['q' => 'Does HabeshaAir own aircraft?',
-     'a' => 'No. HabeshaAir is a charter coordination and brokerage platform. We arrange flights on behalf of clients with FAA Certified Part 135 air carriers or foreign equivalents. Aircraft selection and operational approval rest with the licensed operator.'],
+    ['q' => 'Does HabeshAir own aircraft?',
+     'a' => 'No. HabeshAir is a charter coordination and brokerage platform. We arrange flights on behalf of clients with FAA Certified Part 135 air carriers or foreign equivalents. Aircraft selection and operational approval rest with the licensed operator.'],
     ['q' => 'How fast can I get a quote?',
      'a' => 'Quotes are typically returned within 60 minutes during business hours. Emergency and medevac requests are handled around the clock and prioritized.'],
     ['q' => 'Can I request cargo flights?',
@@ -25,8 +25,8 @@ $faq = [
 ];
 
 $page = [
-    'title'       => 'Charter FAQ — Common Questions | HabeshaAir',
-    'description' => 'Frequently asked questions about HabeshaAir charter coordination: quotes, regions, aircraft, emergency flights, and pricing.',
+    'title'       => 'Charter FAQ — Common Questions | HabeshAir',
+    'description' => 'Frequently asked questions about HabeshAir charter coordination: quotes, regions, aircraft, emergency flights, and pricing.',
     'canonical'   => url('/faq.php'),
     'schema'      => 'faqpage',
     'active_nav'  => 'faq',
@@ -39,7 +39,7 @@ include __DIR__ . '/includes/header.php';
   <div class="container">
     <span class="hero-badge">FAQ</span>
     <h1>Frequently asked questions</h1>
-    <p class="lede">Common questions about HabeshaAir, our charter coordination process, and what to expect.</p>
+    <p class="lede">Common questions about HabeshAir, our charter coordination process, and what to expect.</p>
   </div>
 </section>
 

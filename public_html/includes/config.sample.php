@@ -9,7 +9,7 @@ return [
         'env'       => 'production',           // 'development' or 'production'
         'base_url'  => 'https://habeshair.com',
         'timezone'  => 'UTC',
-        'company'   => 'HabeshaAir',
+        'company'   => 'HabeshAir',
         'email'     => 'info@habeshair.com',
         'whatsapp'  => '14809159971',          // E.164 without + for wa.me links
         'whatsapp_display' => '+1 (480) 915-9971',
@@ -24,7 +24,7 @@ return [
     'mail' => [
         'driver'      => 'mail',               // 'mail' (PHP built-in) or 'smtp' (PHPMailer)
         'from_email'  => 'no-reply@habeshair.com',
-        'from_name'   => 'HabeshaAir',
+        'from_name'   => 'HabeshAir',
         'admin_to'    => 'info@habeshair.com',
         // SMTP (only used when driver = 'smtp', requires PHPMailer in includes/lib/PHPMailer/)
         'smtp_host'   => 'mail.habeshair.com',
@@ -41,8 +41,8 @@ return [
     ],
     'sheets' => [
         // Google Apps Script web app URL deployed to push submissions to
-        // the "HabeshaAir — Charter Requests" / "HabeshaAir — Contact Messages"
-        // sheets in the HabeshaAir Drive folder. Leave blank to disable.
+        // the "HabeshAir — Charter Requests" / "HabeshAir — Contact Messages"
+        // sheets in the HabeshAir Drive folder. Leave blank to disable.
         'webhook_url' => '',
         'secret'      => '',
     ],

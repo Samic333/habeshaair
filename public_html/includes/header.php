@@ -6,7 +6,7 @@
 require_once __DIR__ . '/schema-org.php';
 
 $title       = $page['title']       ?? cfg('app.company') . ' — Premium Air Charter Africa & Beyond';
-$description = $page['description'] ?? 'HabeshaAir coordinates premium VIP, cargo, humanitarian, and emergency charter flights across Africa, the Middle East, and beyond. Response within 60 minutes.';
+$description = $page['description'] ?? 'HabeshAir coordinates premium VIP, cargo, humanitarian, and emergency charter flights across Africa, the Middle East, and beyond. Response within 60 minutes.';
 $canonical   = $page['canonical']   ?? url($_SERVER['REQUEST_URI'] ?? '/');
 $ogImage     = $page['og_image']    ?? url('/assets/images/og-default.jpg');
 ?><!doctype html>
@@ -41,11 +41,11 @@ $ogImage     = $page['og_image']    ?? url('/assets/images/og-default.jpg');
 
 <header class="site-header" id="top">
   <div class="container header-row">
-    <a href="/" class="brand" aria-label="HabeshaAir home">
+    <a href="/" class="brand" aria-label="HabeshAir home">
       <span class="brand-mark" aria-hidden="true">
         <svg viewBox="0 0 32 32" width="32" height="32"><path d="M16 3 L20 14 L31 16 L20 18 L16 29 L12 18 L1 16 L12 14 Z" fill="currentColor"/></svg>
       </span>
-      <span class="brand-name">Habesha<span class="brand-accent">Air</span></span>
+      <span class="brand-name">Habesh<span class="brand-accent">Air</span></span>
     </a>
 
     <button class="nav-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Toggle navigation">

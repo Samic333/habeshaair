@@ -2,7 +2,7 @@
 /**
  * sheets.php — push form submissions to a Google Apps Script webhook
  * which appends them to the corresponding Google Sheet in the
- * HabeshaAir Drive folder. Non-blocking: failures are logged but never
+ * HabeshAir Drive folder. Non-blocking: failures are logged but never
  * surface to the user.
  */
 

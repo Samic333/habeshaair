@@ -24,7 +24,7 @@ $recent = db()->query(
      FROM charter_requests ORDER BY created_at DESC LIMIT 10'
 )->fetchAll();
 
-$adminTitle = 'Dashboard — HabeshaAir admin';
+$adminTitle = 'Dashboard — HabeshAir admin';
 $activeNav  = 'dashboard';
 include __DIR__ . '/includes/admin-header.php';
 ?>
