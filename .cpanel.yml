@@ -1,0 +1,18 @@
+---
+deployment:
+  tasks:
+    # Copy public_html/ contents to the web root.
+    # Replace <CPANEL_USER> with the real cPanel username before first deploy
+    # (or set the deploy path in cPanel → Git Version Control → Manage → Pull or Deploy).
+    - export DEPLOYPATH=/home/<CPANEL_USER>/public_html/
+    - /bin/cp -R public_html/. $DEPLOYPATH
+    - /bin/cp public_html/.htaccess $DEPLOYPATH
+    - /bin/chmod 644 $DEPLOYPATH/.htaccess
+    - /bin/find $DEPLOYPATH -type d -exec /bin/chmod 755 {} \;
+    - /bin/find $DEPLOYPATH -type f -exec /bin/chmod 644 {} \;
+    # Logs must be writable by the web user
+    - /bin/mkdir -p $DEPLOYPATH/logs/ratelimit
+    - /bin/chmod 775 $DEPLOYPATH/logs $DEPLOYPATH/logs/ratelimit
+    # Note: includes/config.php is NOT in git. Create it once via cPanel
+    # File Manager with real DB + SMTP credentials. Subsequent deploys will
+    # NOT overwrite it.

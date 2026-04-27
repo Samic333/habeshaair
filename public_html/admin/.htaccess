@@ -1,0 +1,19 @@
+# admin/.htaccess — extra hardening for the operations console
+# (auth is enforced by PHP; this is belt-and-braces)
+
+Options -Indexes
+
+# Block dotfiles + log/sql artifacts (in case any leak in)
+<FilesMatch "^\.">
+  Require all denied
+</FilesMatch>
+<FilesMatch "(?i)(\.sql|\.log|\.bak|\.swp)$">
+  Require all denied
+</FilesMatch>
+
+# Optional: restrict admin to specific IPs by uncommenting below
+# (remember to add your office + home IPs; lock yourself out if you forget)
+# <RequireAny>
+#   Require ip 203.0.113.0/24
+#   Require ip 198.51.100.42
+# </RequireAny>
