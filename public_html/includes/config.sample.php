@@ -39,4 +39,11 @@ return [
         'rate_login_window'  => 900,           // 15 min
         'rate_login_max'     => 5,             // attempts within window
     ],
+    'sheets' => [
+        // Google Apps Script web app URL deployed to push submissions to
+        // the "HabeshaAir — Charter Requests" / "HabeshaAir — Contact Messages"
+        // sheets in the HabeshaAir Drive folder. Leave blank to disable.
+        'webhook_url' => '',
+        'secret'      => '',
+    ],
 ];

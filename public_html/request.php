@@ -129,6 +129,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     @send_admin_notification($subject, $body);
 
+    // Mirror to Google Sheets (non-blocking)
+    @sheet_log('request', [
+        'Timestamp'             => date('Y-m-d H:i:s'),
+        'Reference'             => $ref,
+        'Service'               => $c['service_type'],
+        'Trip'                  => $c['trip_type'],
+        'Origin'                => $c['origin'],
+        'Destination'           => $c['destination'],
+        'Travel Date'           => $c['travel_date'] ?? '',
+        'Return Date'           => $c['return_date'] ?? '',
+        'Time Pref'             => $c['time_pref'] ?? 'Any',
+        'Passengers'            => $c['passengers'] ?? '',
+        'Weight (kg)'           => $c['approx_weight_kg'] ?? '',
+        'Cargo Type'            => $c['cargo_type'] ?? '',
+        'Urgency'               => $c['urgency_level'],
+        'Budget'                => $c['budget_range'] ?? '',
+        'Special Requirements'  => $c['special_requirements'] ?? '',
+        'Full Name'             => $c['full_name'],
+        'Email'                 => $c['email'],
+        'Phone'                 => $c['phone'],
+        'Company'               => $c['company'] ?? '',
+        'Contact Method'        => $c['contact_method'],
+        'IP'                    => client_ip() ?? '',
+        'User Agent'            => substr((string)($_SERVER['HTTP_USER_AGENT'] ?? ''), 0, 255),
+    ]);
+
     redirect('/request-success.php?ref=' . urlencode($ref));
 }
 

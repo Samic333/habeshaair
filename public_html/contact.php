@@ -58,6 +58,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $body .= "Subject: {$c['subject']}\n\n{$c['message']}\n";
     @send_admin_notification($subject, $body);
 
+    // Mirror to Google Sheets (non-blocking)
+    @sheet_log('contact', [
+        'Timestamp'  => date('Y-m-d H:i:s'),
+        'Full Name'  => $c['full_name'],
+        'Email'      => $c['email'],
+        'Phone'      => $c['phone']   ?? '',
+        'Subject'    => $c['subject'],
+        'Message'    => $c['message'],
+        'IP'         => client_ip() ?? '',
+    ]);
+
     redirect('/contact-success.php');
 }
 
