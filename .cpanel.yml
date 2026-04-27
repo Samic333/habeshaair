@@ -4,7 +4,7 @@ deployment:
     # Copy public_html/ contents to the web root.
     # Replace <CPANEL_USER> with the real cPanel username before first deploy
     # (or set the deploy path in cPanel → Git Version Control → Manage → Pull or Deploy).
-    - export DEPLOYPATH=/home/<CPANEL_USER>/public_html/
+    - export DEPLOYPATH=/home/fruinxrj/public_html/
     - /bin/cp -R public_html/. $DEPLOYPATH
     - /bin/cp public_html/.htaccess $DEPLOYPATH
     - /bin/chmod 644 $DEPLOYPATH/.htaccess
