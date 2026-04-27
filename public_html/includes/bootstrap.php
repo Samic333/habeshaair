@@ -4,11 +4,6 @@
  * Loads config, sets error mode, starts session, requires helpers.
  */
 
-// TEMP DEBUG: force errors visible from the very first line
-error_reporting(E_ALL);
-@ini_set('display_errors', '1');
-@ini_set('display_startup_errors', '1');
-
 if (defined('HA_BOOTSTRAPPED')) return;
 define('HA_BOOTSTRAPPED', true);
 
@@ -19,7 +14,17 @@ if (!file_exists($configPath)) {
     exit('Configuration missing. Copy includes/config.sample.php to includes/config.php and fill in credentials.');
 }
 $CONFIG = require $configPath;
-echo "<!-- HA: config loaded, type=" . gettype($CONFIG) . " env=" . ($CONFIG['app']['env'] ?? 'NOT_SET') . " -->\n";
+
+// Error reporting based on env
+if (($CONFIG['app']['env'] ?? 'production') === 'development') {
+    error_reporting(E_ALL);
+    ini_set('display_errors', '1');
+} else {
+    error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT);
+    ini_set('display_errors', '0');
+    ini_set('log_errors', '1');
+    @ini_set('error_log', __DIR__ . '/../logs/php-errors.log');
+}
 
 date_default_timezone_set($CONFIG['app']['timezone'] ?? 'UTC');
 
