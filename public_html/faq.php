@@ -3,7 +3,7 @@ require_once __DIR__ . '/includes/bootstrap.php';
 
 $faq = [
     ['q' => 'Does HabeshAir own aircraft?',
-     'a' => 'No. HabeshAir is a charter coordination and brokerage platform. We arrange flights on behalf of clients with FAA Certified Part 135 air carriers or foreign equivalents. Aircraft selection and operational approval rest with the licensed operator.'],
+     'a' => 'No. HabeshAir is a charter coordination and brokerage platform. We arrange flights on behalf of clients through a vetted network of licensed charter operators and airlines worldwide. Aircraft selection and operational approval rest with the licensed operator.'],
     ['q' => 'How fast can I get a quote?',
      'a' => 'Quotes are typically returned within 60 minutes during business hours. Emergency and medevac requests are handled around the clock and prioritized.'],
     ['q' => 'Can I request cargo flights?',

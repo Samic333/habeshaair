@@ -31,7 +31,7 @@ function render_schema_org(): void {
             'serviceType' => 'Air Charter Brokerage',
             'provider' => ['@type' => 'Organization', 'name' => $org['name']],
             'areaServed' => 'Africa, Middle East, and global routes',
-            'description' => 'VIP, cargo, humanitarian, emergency medevac, and group charter flight coordination through certified Part 135 operators.',
+            'description' => 'VIP, cargo, humanitarian, emergency medevac, and group charter flight coordination through a vetted global network of licensed operators and airlines.',
         ];
     } elseif ($key === 'contactpage') {
         $blocks[] = [

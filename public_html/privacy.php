@@ -25,7 +25,7 @@ include __DIR__ . '/includes/header.php';
     </ul>
 
     <h2>Sharing</h2>
-    <p>To deliver a charter, we share necessary details (route, dates, passenger/cargo information, contact details) with the certified Part 135 air carrier or foreign-equivalent operator selected for your flight. We do not sell or share your personal information for marketing purposes.</p>
+    <p>To deliver a charter, we share necessary details (route, dates, passenger/cargo information, contact details) with the licensed charter operator or airline selected for your flight. We do not sell or share your personal information for marketing purposes.</p>
 
     <h2>Retention</h2>
     <p>Charter request records are retained for operational, regulatory, and accounting purposes. You may request deletion of your records at any time by emailing <a href="mailto:<?= e(cfg('app.email')) ?>"><?= e(cfg('app.email')) ?></a>; we will action requests subject to legal retention requirements.</p>

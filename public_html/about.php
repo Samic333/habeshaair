@@ -25,7 +25,7 @@ include __DIR__ . '/includes/header.php';
     <p>HabeshAir is a charter coordination and brokerage platform. Through aviation partners, we offer access to over 5,000 aircraft worldwide. Our role is to understand your mission, source the right aircraft for the route and payload, and coordinate with the operator from the first call to safe landing.</p>
 
     <h2>Who we work with</h2>
-    <p>HabeshAir arranges flights on behalf of its clients with FAA Certified Part 135 air carriers or foreign equivalents. We work with operators experienced in unpaved strips, austere airfields, and time-critical missions across Africa, the Middle East, and beyond. Aircraft selection and operational approval rest with the licensed operator.</p>
+    <p>HabeshAir arranges flights on behalf of its clients through a vetted network of licensed charter operators and airlines worldwide. We work with operators experienced in unpaved strips, austere airfields, and time-critical missions across Africa, the Middle East, and beyond. Aircraft selection and operational approval rest with the licensed operator.</p>
 
     <h2>Why clients choose us</h2>
     <ul class="list-check">

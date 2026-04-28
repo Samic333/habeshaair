@@ -25,7 +25,7 @@ $wa = whatsapp_link("Hello HabeshAir, I just submitted a charter request. Refere
       <strong>What happens next</strong>
       <ol style="margin:.5rem 0 0; padding-left:1.25rem">
         <li>We review your route, payload, and timing.</li>
-        <li>We source aircraft options through certified Part 135 operators (or foreign equivalents).</li>
+        <li>We source aircraft options through our vetted network of licensed charter operators and airlines.</li>
         <li>You receive a written proposal with pricing and operational notes.</li>
         <li>On confirmation, we coordinate the flight with the operator and stay with you through landing.</li>
       </ol>

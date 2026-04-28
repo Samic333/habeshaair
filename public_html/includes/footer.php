@@ -55,7 +55,7 @@
     </div>
   </div>
   <div class="container footer-bottom">
-    <p>&copy; <?= date('Y') ?> <?= e(cfg('app.company')) ?>. Charter requests are coordinated through FAA Certified Part 135 air carriers or foreign equivalents.</p>
+    <p>&copy; <?= date('Y') ?> <?= e(cfg('app.company')) ?>. Charter requests are coordinated through a vetted global network of licensed charter operators and airlines.</p>
     <ul class="footer-meta">
       <li><a href="/privacy.php">Privacy</a></li>
       <li><a href="/terms.php">Terms</a></li>

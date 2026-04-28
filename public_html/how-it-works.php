@@ -29,7 +29,7 @@ include __DIR__ . '/includes/header.php';
 
       <div class="step"><div class="step-num">2</div><div>
         <h3>We review &amp; source</h3>
-        <p>A coordinator validates feasibility — airport permissions, aircraft type for the payload, route legality — and sources options through certified Part 135 operators or foreign equivalents. We have access to over 5,000 aircraft worldwide through aviation partners.</p>
+        <p>A coordinator validates feasibility — airport permissions, aircraft type for the payload, route legality — and sources options through our vetted global network of licensed charter operators and airlines. Together our partners give us access to over 5,000 aircraft worldwide.</p>
       </div></div>
 
       <div class="step"><div class="step-num">3</div><div>

@@ -31,7 +31,7 @@ include __DIR__ . '/includes/header.php';
     <div class="text-center prose" style="margin-bottom:2.5rem">
       <p class="eyebrow">What we do</p>
       <h2>Charter solutions for time-critical, complex, and high-value missions</h2>
-      <p class="lede">HabeshAir coordinates flights with FAA Certified Part 135 air carriers and foreign equivalents. Through trusted aviation partners, we offer access to over 5,000 aircraft worldwide.</p>
+      <p class="lede">HabeshAir coordinates flights through a vetted global network of licensed charter operators and airlines. Our trusted aviation partners give clients access to over 5,000 aircraft worldwide — from light jets to long-range, group, and cargo lift.</p>
     </div>
 
     <div class="grid grid-3">
