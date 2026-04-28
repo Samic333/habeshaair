@@ -1,4 +1,4 @@
-/* request-form.js — show/hide passenger vs cargo fields based on service_type. */
+/* request-form.js — show/hide fields + client-side validation. */
 (function () {
   'use strict';
 
@@ -25,4 +25,69 @@
     if (e.target.matches('input[name="service_type"], input[name="trip_type"]')) update();
   });
   update();
+
+  // Client-side validation
+  function isVisible(el) {
+    let node = el;
+    while (node && node !== form) {
+      if (node.hidden || getComputedStyle(node).display === 'none') return false;
+      node = node.parentElement;
+    }
+    return true;
+  }
+
+  function showErr(el, msg) {
+    const span = document.createElement('span');
+    span.className = 'js-err';
+    span.style.cssText = 'display:block;color:var(--danger);font-size:.85rem;margin-top:.25rem';
+    span.textContent = msg;
+    el.parentElement.appendChild(span);
+  }
+
+  function clearErrs() {
+    form.querySelectorAll('.js-err').forEach(n => n.remove());
+    form.querySelectorAll('.has-error').forEach(n => n.classList.remove('has-error'));
+  }
+
+  form.addEventListener('submit', function (e) {
+    clearErrs();
+    let firstInvalid = null;
+
+    // Required text / email / date / select inputs that are visible
+    form.querySelectorAll('input[required], textarea[required]').forEach(function (input) {
+      if (!isVisible(input)) return;
+      const val = input.value.trim();
+      if (!val) {
+        input.classList.add('has-error');
+        showErr(input, 'This field is required');
+        if (!firstInvalid) firstInvalid = input;
+      }
+    });
+
+    // Required radio groups
+    ['service_type', 'trip_type', 'urgency_level', 'contact_method'].forEach(function (name) {
+      const radios = form.querySelectorAll('input[name="' + name + '"]');
+      if (!radios.length) return;
+      const firstRadio = radios[0];
+      if (!isVisible(firstRadio)) return;
+      const checked = form.querySelector('input[name="' + name + '"]:checked');
+      if (!checked) {
+        const row = firstRadio.closest('.radio-row') || firstRadio.parentElement;
+        showErr(row, 'Please select an option');
+        if (!firstInvalid) firstInvalid = firstRadio;
+      }
+    });
+
+    // Consent checkbox
+    const consent = form.querySelector('input[name="consent"]');
+    if (consent && !consent.checked) {
+      showErr(consent, 'You must agree to continue');
+      if (!firstInvalid) firstInvalid = consent;
+    }
+
+    if (firstInvalid) {
+      e.preventDefault();
+      firstInvalid.focus();
+    }
+  });
 })();

@@ -8,6 +8,16 @@
  * exists, so the site runs out of the box without any external library.
  */
 
+function send_email(string $to, string $subject, string $textBody, string $htmlBody = ''): bool {
+    $fromAddr = (string)cfg('mail.from_email', 'no-reply@habeshair.com');
+    $fromName = (string)cfg('mail.from_name', cfg('app.company', 'HabeshAir'));
+    $driver   = (string)cfg('mail.driver', 'mail');
+    if ($driver === 'smtp' && _phpmailer_available()) {
+        return _send_via_phpmailer($to, $fromAddr, $fromName, $subject, $textBody, $htmlBody);
+    }
+    return _send_via_mail($to, $fromAddr, $fromName, $subject, $textBody, $htmlBody);
+}
+
 function send_admin_notification(string $subject, string $textBody, string $htmlBody = ''): bool {
     $to       = (string)cfg('mail.admin_to', cfg('app.email', 'info@habeshair.com'));
     $fromAddr = (string)cfg('mail.from_email', 'no-reply@habeshair.com');

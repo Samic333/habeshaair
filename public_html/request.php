@@ -129,6 +129,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     @send_admin_notification($subject, $body);
 
+    // Confirmation email to requester
+    $confSubject = "Charter request {$ref} received — HabeshAir";
+    $confBody  = "Dear {$c['full_name']},\n\n";
+    $confBody .= "Your charter request has been received.\n\n";
+    $confBody .= "Reference: {$ref}\n";
+    $confBody .= "Route:     {$c['origin']} \xE2\x86\x92 {$c['destination']}\n";
+    $confBody .= "Service:   {$c['service_type']}\n";
+    $confBody .= "Date:      " . ($c['travel_date'] ?? '-') . "\n";
+    $confBody .= "Urgency:   {$c['urgency_level']}\n\n";
+    $confBody .= "Our team will be in touch within 60 minutes.\n";
+    $confBody .= "For urgent requests, reach us directly:\n";
+    $confBody .= "  Email:    " . cfg('app.email', 'info@habeshair.com') . "\n";
+    $confBody .= "  WhatsApp: " . cfg('app.whatsapp_display', '') . "\n\n";
+    $confBody .= "Thank you for choosing HabeshAir.\n";
+    @send_email($c['email'], $confSubject, $confBody);
+
     // Mirror to Google Sheets (non-blocking)
     @sheet_log('request', [
         'Timestamp'             => date('Y-m-d H:i:s'),
