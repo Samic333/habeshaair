@@ -24,6 +24,8 @@ $me = current_admin();
       <a href="/admin/" <?= ($activeNav ?? '') === 'dashboard' ? 'class="active"' : '' ?>>Dashboard</a>
       <a href="/admin/requests.php" <?= ($activeNav ?? '') === 'requests' ? 'class="active"' : '' ?>>Requests</a>
       <a href="/admin/messages.php" <?= ($activeNav ?? '') === 'messages' ? 'class="active"' : '' ?>>Messages</a>
+      <a href="/admin/airlines.php" <?= ($activeNav ?? '') === 'airlines' ? 'class="active"' : '' ?>>Airlines</a>
+      <a href="/admin/analytics.php" <?= ($activeNav ?? '') === 'analytics' ? 'class="active"' : '' ?>>Analytics</a>
       <span class="admin-user"><?= e($me['display_name'] ?? '') ?></span>
       <a href="/admin/logout.php" class="admin-logout">Sign out</a>
     </nav>

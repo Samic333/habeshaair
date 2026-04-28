@@ -4,6 +4,8 @@
  * Each page sets $page = ['title' => ..., 'description' => ..., ...] before include.
  */
 require_once __DIR__ . '/schema-org.php';
+require_once __DIR__ . '/analytics.php';
+@track_pageview();
 
 $title       = $page['title']       ?? cfg('app.company') . ' — Premium Air Charter Africa & Beyond';
 $description = $page['description'] ?? 'HabeshAir coordinates premium VIP, cargo, humanitarian, and emergency charter flights across Africa, the Middle East, and beyond. Response within 60 minutes.';

@@ -46,4 +46,22 @@ return [
         'webhook_url' => '',
         'secret'      => '',
     ],
+    'sheets_sync' => [
+        // Google Sheet "Publish to web → CSV" URL for the Airlines directory.
+        // Sheet → File → Share → Publish to web → choose sheet → CSV → Publish.
+        // Columns: sheet_row_id|name|iata|icao|base_country|email|cname|phone|whatsapp|website|fleet|regions|services|pax_max|kg_max|rating|notes|active
+        'airlines_csv_url' => '',
+    ],
+    'cron' => [
+        // Shared secret required as ?secret=XXX on /cron/* URLs.
+        // Generate with: php -r "echo bin2hex(random_bytes(16));"
+        'secret' => '',
+    ],
+    'analytics' => [
+        // Public paths that should NOT be tracked. /admin /cron /assets are
+        // already filtered automatically.
+        'skip_paths' => ['/healthz'],
+        // Local / known-internal IPs to skip
+        'skip_ips'   => ['127.0.0.1', '::1'],
+    ],
 ];
