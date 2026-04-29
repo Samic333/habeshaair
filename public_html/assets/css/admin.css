@@ -97,6 +97,12 @@
 .status-sent       { background: #dbeafe; color: #1d4ed8; }
 .status-declined   { background: #fee2e2; color: #b91c1c; }
 .status-no-response { background: #f3f4f6; color: #6b7280; }
+.status-draft      { background: #f3f4f6; color: #4b5563; }
+.status-accepted   { background: #d1fae5; color: #065f46; }
+.status-rejected   { background: #fee2e2; color: #b91c1c; }
+.status-expired    { background: #f3f4f6; color: #6b7280; }
+.status-won        { background: #bbf7d0; color: #14532d; }
+.status-lost       { background: #fecaca; color: #7f1d1d; }
 
 .badge-warn { background: var(--gold-100); color: #93641b; border: 1px solid #f0d8a3; }
 

@@ -62,6 +62,15 @@ return [
         // Generate with: php -r "echo bin2hex(random_bytes(16));"
         'secret' => '',
     ],
+    'imap' => [
+        // Phase 3: every 2 min, /cron/imap-poll.php logs in here, finds
+        // unread mail tagged replies+<token>@habeshair.com, and routes the
+        // body into rfq_replies + bumps the dispatch status.
+        // Requires PHP IMAP extension (cPanel → Select PHP Version → Extensions).
+        'host' => '{mail.habeshair.com:993/imap/ssl}INBOX',
+        'user' => 'replies@habeshair.com',
+        'pass' => 'CHANGE_ME',
+    ],
     'analytics' => [
         // Public paths that should NOT be tracked. /admin /cron /assets are
         // already filtered automatically.

@@ -11,6 +11,49 @@ $STATUSES = ['New','Reviewing','RFQ-Sent','RFQ-Received','Quoted','Waiting','Con
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     csrf_require();
+    $action = (string)($_POST['action'] ?? 'update_status');
+
+    if ($action === 'create_quote') {
+        // Manual quote — admin clicked "Add quote" without going through an RFQ reply.
+        $airlineId = (int)($_POST['airline_id'] ?? 0);
+        $operator  = (float)($_POST['operator_price'] ?? 0);
+        $currency  = strtoupper(trim((string)($_POST['currency'] ?? 'USD')));
+        if (strlen($currency) !== 3) $currency = 'USD';
+        $markup    = (float)($_POST['markup_pct'] ?? 10);
+        if ($markup < 0)   $markup = 0;
+        if ($markup > 100) $markup = 100;
+        $serviceFee = (float)($_POST['service_fee'] ?? 0);
+        if ($serviceFee < 0) $serviceFee = 0;
+        $validity  = trim((string)($_POST['validity_until'] ?? ''));
+        if ($validity !== '' && !preg_match('/^\d{4}-\d{2}-\d{2}$/', $validity)) $validity = '';
+
+        if ($airlineId <= 0 || $operator <= 0) {
+            flash_set('quote_err', 'Pick an airline and enter the operator price.');
+        } else {
+            $exists = db()->prepare('SELECT 1 FROM airlines WHERE id = ?');
+            $exists->execute([$airlineId]);
+            if (!$exists->fetchColumn()) {
+                flash_set('quote_err', 'Selected airline not found.');
+            } else {
+                $ins = db()->prepare(
+                    'INSERT INTO quotes
+                     (request_id, dispatch_id, airline_id, operator_price, currency,
+                      markup_pct, service_fee, validity_until, status)
+                     VALUES (?, NULL, ?, ?, ?, ?, ?, ?, "Draft")'
+                );
+                $ins->execute([
+                    $id, $airlineId, $operator, $currency, $markup, $serviceFee,
+                    $validity !== '' ? $validity : null,
+                ]);
+                $newQuoteId = (int)db()->lastInsertId();
+                flash_set('quote_msg', 'Quote drafted.');
+                redirect('/admin/quote-view.php?id=' . $newQuoteId);
+            }
+        }
+        redirect('/admin/request-view.php?id=' . $id . '#quotes');
+    }
+
+    // Default: update_status
     $newStatus = (string)($_POST['status'] ?? 'New');
     if (!in_array($newStatus, $STATUSES, true)) $newStatus = 'New';
     $isUrgent = !empty($_POST['is_urgent']) ? 1 : 0;
@@ -49,6 +92,26 @@ $dispatches = $dispStmt->fetchAll();
 
 $rfqMsg = flash_get('rfq_msg');
 $rfqErr = flash_get('rfq_err');
+$quoteMsg = flash_get('quote_msg');
+$quoteErr = flash_get('quote_err');
+
+// Quotes for this request (for the comparison panel)
+$quotesStmt = db()->prepare(
+    'SELECT q.id, q.airline_id, q.operator_price, q.currency, q.markup_pct,
+            q.markup_amount, q.client_price, q.service_fee, q.total_to_client,
+            q.validity_until, q.status, q.sent_at, q.created_at,
+            a.name AS airline_name
+     FROM quotes q
+     JOIN airlines a ON a.id = q.airline_id
+     WHERE q.request_id = ?
+     ORDER BY q.status = "Won" DESC, q.total_to_client ASC, q.created_at DESC'
+);
+$quotesStmt->execute([$id]);
+$quotes = $quotesStmt->fetchAll();
+
+// Active airlines for the manual-quote form
+$airlinesStmt = db()->query('SELECT id, name, iata_code, icao_code FROM airlines WHERE active = 1 ORDER BY name ASC');
+$activeAirlines = $airlinesStmt->fetchAll();
 
 $adminTitle = 'Request ' . $req['reference_code'] . ' — HabeshAir admin';
 $activeNav  = 'requests';
@@ -98,6 +161,7 @@ $wa = whatsapp_link("Hello {$req['full_name']}, regarding your charter request {
 
       <form method="post" class="form-card">
         <?= csrf_field() ?>
+        <input type="hidden" name="action" value="update_status">
         <div class="form-grid">
           <div class="form-group">
             <label for="status">Status</label>
@@ -192,6 +256,92 @@ $wa = whatsapp_link("Hello {$req['full_name']}, regarding your charter request {
         document.querySelectorAll('.airline-check').forEach(c => c.checked = e.target.checked);
       });
     </script>
+  <?php endif; ?>
+
+  <h2 id="quotes" style="margin-top:3rem">Quotes</h2>
+  <p style="color:var(--gray-600); margin-bottom:1rem">
+    Compare priced quotes side by side. Replies that arrive via the IMAP cron land here automatically as drafts.
+    You can also add a manual quote — phone calls, WhatsApp, scribbled-on-a-napkin numbers — without going through an RFQ email.
+  </p>
+
+  <?php if ($quoteMsg): ?><div class="alert alert-success"><?= e($quoteMsg) ?></div><?php endif; ?>
+  <?php if ($quoteErr): ?><div class="alert alert-error"><?= e($quoteErr) ?></div><?php endif; ?>
+
+  <?php if ($quotes): ?>
+    <div class="table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Airline</th>
+            <th>Operator</th>
+            <th>Markup</th>
+            <th>Service fee</th>
+            <th>Total to client</th>
+            <th>Validity</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($quotes as $qq): ?>
+          <tr<?= $qq['status'] === 'Won' ? ' style="background:#f0fdf4"' : '' ?>>
+            <td><strong><?= e($qq['airline_name']) ?></strong></td>
+            <td><?= e($qq['currency']) ?> <?= number_format((float)$qq['operator_price'], 2) ?></td>
+            <td><?= e($qq['markup_pct']) ?>% <small style="color:var(--gray-600)">(<?= e($qq['currency']) ?> <?= number_format((float)$qq['markup_amount'], 2) ?>)</small></td>
+            <td><?= e($qq['currency']) ?> <?= number_format((float)$qq['service_fee'], 2) ?></td>
+            <td><strong><?= e($qq['currency']) ?> <?= number_format((float)$qq['total_to_client'], 2) ?></strong></td>
+            <td><?= e($qq['validity_until'] ?: '—') ?></td>
+            <td><span class="status status-<?= e(strtolower($qq['status'])) ?>"><?= e($qq['status']) ?></span></td>
+            <td><a href="/admin/quote-view.php?id=<?= (int)$qq['id'] ?>" class="btn btn-outline">View</a></td>
+          </tr>
+        <?php endforeach; ?>
+        </tbody>
+      </table>
+    </div>
+  <?php endif; ?>
+
+  <?php if ($activeAirlines): ?>
+    <details style="margin-top:1.5rem">
+      <summary style="cursor:pointer; font-weight:600">+ Add manual quote</summary>
+      <form method="post" class="form-card" style="margin-top:1rem">
+        <?= csrf_field() ?>
+        <input type="hidden" name="action" value="create_quote">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="airline_id">Airline</label>
+            <select id="airline_id" name="airline_id" required>
+              <option value="">— pick an airline —</option>
+              <?php foreach ($activeAirlines as $a): ?>
+                <option value="<?= (int)$a['id'] ?>"><?= e($a['name']) ?>
+                  <?php if ($a['iata_code']): ?> (<?= e($a['iata_code']) ?>)<?php endif; ?>
+                </option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="operator_price">Operator price</label>
+            <input id="operator_price" name="operator_price" type="number" step="0.01" min="0" required placeholder="e.g. 4500">
+          </div>
+          <div class="form-group">
+            <label for="currency">Currency</label>
+            <input id="currency" name="currency" type="text" maxlength="3" value="USD" style="text-transform:uppercase" required>
+          </div>
+          <div class="form-group">
+            <label for="markup_pct">Markup %</label>
+            <input id="markup_pct" name="markup_pct" type="number" step="0.01" min="0" max="100" value="10" required>
+          </div>
+          <div class="form-group">
+            <label for="service_fee">Service fee</label>
+            <input id="service_fee" name="service_fee" type="number" step="0.01" min="0" value="0">
+          </div>
+          <div class="form-group">
+            <label for="validity_until">Valid until</label>
+            <input id="validity_until" name="validity_until" type="date">
+          </div>
+          <button class="btn btn-navy" type="submit">Create quote</button>
+        </div>
+      </form>
+    </details>
   <?php endif; ?>
 
   <?php if ($dispatches): ?>
