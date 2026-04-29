@@ -1,12 +1,13 @@
 <?php
 require_once __DIR__ . '/../includes/bootstrap.php';
 require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/airline-matcher.php';
 require_admin();
 
 $id = (int)($_GET['id'] ?? 0);
 if ($id <= 0) redirect('/admin/requests.php');
 
-$STATUSES = ['New','Reviewing','Quoted','Waiting','Confirmed','Cancelled','Closed'];
+$STATUSES = ['New','Reviewing','RFQ-Sent','RFQ-Received','Quoted','Waiting','Confirmed','Flown','Cancelled','Closed'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     csrf_require();
@@ -29,6 +30,25 @@ $req = $stmt->fetch();
 if (!$req) redirect('/admin/requests.php');
 
 $saved = flash_get('saved');
+
+// Match airlines (top 10)
+$matches = match_airlines_for_request($req, 10);
+
+// Existing RFQ dispatches for this request
+$dispStmt = db()->prepare(
+    'SELECT d.id, d.reply_token, d.subject, d.status, d.sent_at, d.reply_at,
+            d.reply_snippet, d.quoted_amount, d.quoted_currency,
+            a.name AS airline_name, a.iata_code, a.icao_code, a.contact_email
+     FROM rfq_dispatches d
+     JOIN airlines a ON a.id = d.airline_id
+     WHERE d.request_id = ?
+     ORDER BY d.sent_at DESC'
+);
+$dispStmt->execute([$id]);
+$dispatches = $dispStmt->fetchAll();
+
+$rfqMsg = flash_get('rfq_msg');
+$rfqErr = flash_get('rfq_err');
 
 $adminTitle = 'Request ' . $req['reference_code'] . ' — HabeshAir admin';
 $activeNav  = 'requests';
@@ -103,6 +123,110 @@ $wa = whatsapp_link("Hello {$req['full_name']}, regarding your charter request {
       </form>
     </div>
   </div>
+
+  <?php if ($rfqMsg): ?><div class="alert alert-success" style="margin-top:2rem"><?= e($rfqMsg) ?></div><?php endif; ?>
+  <?php if ($rfqErr): ?><div class="alert alert-error" style="margin-top:2rem"><?= e($rfqErr) ?></div><?php endif; ?>
+
+  <h2 style="margin-top:3rem">Source quotes</h2>
+  <p style="color:var(--gray-600); margin-bottom:1rem">
+    Top airlines matched against this request's service type, route, and capacity. Pick the operators to send an RFQ to.
+  </p>
+
+  <?php if (!$matches): ?>
+    <div class="alert alert-info">
+      No matching airlines yet. Add operators to the
+      <a href="/admin/airlines.php">Airlines directory</a> (or fill the
+      Google Sheet and click "Sync now").
+    </div>
+  <?php else: ?>
+    <form method="get" action="/admin/rfq-compose.php" class="form-card" style="padding:1rem">
+      <input type="hidden" name="request_id" value="<?= (int)$req['id'] ?>">
+      <div class="table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th style="width:40px"><input type="checkbox" id="select-all-airlines"></th>
+              <th>Airline</th>
+              <th>Codes</th>
+              <th>Country</th>
+              <th>Capacity</th>
+              <th>Score</th>
+              <th>Why</th>
+            </tr>
+          </thead>
+          <tbody>
+          <?php foreach ($matches as $m):
+            $services = $m['service_types'] ? json_decode($m['service_types'], true) : [];
+            $regions  = $m['regions_served'] ? json_decode($m['regions_served'], true) : [];
+          ?>
+            <tr>
+              <td><input type="checkbox" name="airlines[]" value="<?= (int)$m['id'] ?>" class="airline-check"></td>
+              <td>
+                <a href="/admin/airline-view.php?id=<?= (int)$m['id'] ?>"><strong><?= e($m['name']) ?></strong></a>
+                <?php if ($m['contact_email']): ?><br><small><?= e($m['contact_email']) ?></small><?php endif; ?>
+              </td>
+              <td>
+                <?php if ($m['iata_code']): ?><code><?= e($m['iata_code']) ?></code><?php endif; ?>
+                <?php if ($m['icao_code']): ?> <code><?= e($m['icao_code']) ?></code><?php endif; ?>
+              </td>
+              <td><?= e($m['base_country']) ?: '—' ?></td>
+              <td>
+                <?php if ($m['capacity_pax_max']): ?><?= (int)$m['capacity_pax_max'] ?> pax<?php endif; ?>
+                <?php if ($m['capacity_pax_max'] && $m['capacity_kg_max']): ?> · <?php endif; ?>
+                <?php if ($m['capacity_kg_max']): ?><?= number_format((int)$m['capacity_kg_max']) ?> kg<?php endif; ?>
+                <?php if (!$m['capacity_pax_max'] && !$m['capacity_kg_max']): ?>—<?php endif; ?>
+              </td>
+              <td><strong><?= (int)$m['score'] ?></strong></td>
+              <td><small><?= $m['why'] ? e(implode(', ', $m['why'])) : '—' ?></small></td>
+            </tr>
+          <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
+      <div class="form-actions" style="margin-top:1rem">
+        <button class="btn btn-navy" type="submit">Compose RFQ to selected →</button>
+      </div>
+    </form>
+    <script>
+      document.getElementById('select-all-airlines').addEventListener('change', function(e){
+        document.querySelectorAll('.airline-check').forEach(c => c.checked = e.target.checked);
+      });
+    </script>
+  <?php endif; ?>
+
+  <?php if ($dispatches): ?>
+    <h2 style="margin-top:3rem">RFQs sent</h2>
+    <div class="table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr><th>Airline</th><th>Sent</th><th>Status</th><th>Reply / quote</th><th></th></tr>
+        </thead>
+        <tbody>
+        <?php foreach ($dispatches as $d): ?>
+          <tr>
+            <td>
+              <strong><?= e($d['airline_name']) ?></strong>
+              <?php if ($d['contact_email']): ?><br><small><?= e($d['contact_email']) ?></small><?php endif; ?>
+            </td>
+            <td><?= e($d['sent_at']) ?></td>
+            <td><span class="status status-<?= e(strtolower($d['status'])) ?>"><?= e($d['status']) ?></span></td>
+            <td>
+              <?php if ($d['quoted_amount']): ?>
+                <strong><?= e($d['quoted_currency'] ?: 'USD') ?> <?= number_format((float)$d['quoted_amount'], 2) ?></strong><br>
+              <?php endif; ?>
+              <?php if ($d['reply_snippet']): ?>
+                <small><?= e(mb_substr($d['reply_snippet'], 0, 140)) ?><?= mb_strlen($d['reply_snippet']) > 140 ? '…' : '' ?></small>
+              <?php elseif ($d['status'] === 'Sent'): ?>
+                <small style="color:var(--gray-600)">Awaiting reply…</small>
+              <?php endif; ?>
+            </td>
+            <td><a href="/admin/rfq-view.php?id=<?= (int)$d['id'] ?>" class="btn btn-outline">View</a></td>
+          </tr>
+        <?php endforeach; ?>
+        </tbody>
+      </table>
+    </div>
+  <?php endif; ?>
 </div>
 
 <?php include __DIR__ . '/includes/admin-footer.php'; ?>

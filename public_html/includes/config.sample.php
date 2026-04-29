@@ -32,6 +32,11 @@ return [
         'smtp_secure' => 'ssl',                // 'ssl' or 'tls'
         'smtp_user'   => 'no-reply@habeshair.com',
         'smtp_pass'   => 'CHANGE_ME',
+        // Reply-To plus-addressing for outbound RFQs. Phase 3's IMAP cron
+        // routes airline replies back to the originating dispatch via this
+        // tag. Address pattern: <local>+<token>@<domain>.
+        'reply_inbox_local'  => 'replies',
+        'reply_inbox_domain' => 'habeshair.com',
     ],
     'security' => [
         'csrf_ttl'           => 7200,          // seconds

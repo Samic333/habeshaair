@@ -8,14 +8,14 @@
  * exists, so the site runs out of the box without any external library.
  */
 
-function send_email(string $to, string $subject, string $textBody, string $htmlBody = ''): bool {
+function send_email(string $to, string $subject, string $textBody, string $htmlBody = '', string $replyTo = ''): bool {
     $fromAddr = (string)cfg('mail.from_email', 'no-reply@habeshair.com');
     $fromName = (string)cfg('mail.from_name', cfg('app.company', 'HabeshAir'));
     $driver   = (string)cfg('mail.driver', 'mail');
     if ($driver === 'smtp' && _phpmailer_available()) {
-        return _send_via_phpmailer($to, $fromAddr, $fromName, $subject, $textBody, $htmlBody);
+        return _send_via_phpmailer($to, $fromAddr, $fromName, $subject, $textBody, $htmlBody, $replyTo);
     }
-    return _send_via_mail($to, $fromAddr, $fromName, $subject, $textBody, $htmlBody);
+    return _send_via_mail($to, $fromAddr, $fromName, $subject, $textBody, $htmlBody, $replyTo);
 }
 
 function send_admin_notification(string $subject, string $textBody, string $htmlBody = ''): bool {
@@ -30,11 +30,11 @@ function send_admin_notification(string $subject, string $textBody, string $html
     return _send_via_mail($to, $fromAddr, $fromName, $subject, $textBody, $htmlBody);
 }
 
-function _send_via_mail(string $to, string $fromAddr, string $fromName, string $subject, string $text, string $html): bool {
+function _send_via_mail(string $to, string $fromAddr, string $fromName, string $subject, string $text, string $html, string $replyTo = ''): bool {
     $boundary = '=_HA_' . bin2hex(random_bytes(8));
     $headers  = [];
     $headers[] = 'From: ' . sprintf('"%s" <%s>', addslashes($fromName), $fromAddr);
-    $headers[] = 'Reply-To: ' . $fromAddr;
+    $headers[] = 'Reply-To: ' . ($replyTo !== '' ? $replyTo : $fromAddr);
     $headers[] = 'X-Mailer: HabeshAir/PHP';
     $headers[] = 'MIME-Version: 1.0';
 
@@ -63,7 +63,7 @@ function _phpmailer_available(): bool {
     return file_exists(__DIR__ . '/lib/PHPMailer/PHPMailer.php');
 }
 
-function _send_via_phpmailer(string $to, string $fromAddr, string $fromName, string $subject, string $text, string $html): bool {
+function _send_via_phpmailer(string $to, string $fromAddr, string $fromName, string $subject, string $text, string $html, string $replyTo = ''): bool {
     require_once __DIR__ . '/lib/PHPMailer/Exception.php';
     require_once __DIR__ . '/lib/PHPMailer/PHPMailer.php';
     require_once __DIR__ . '/lib/PHPMailer/SMTP.php';
@@ -80,7 +80,7 @@ function _send_via_phpmailer(string $to, string $fromAddr, string $fromName, str
         $m->CharSet    = 'UTF-8';
         $m->setFrom($fromAddr, $fromName);
         $m->addAddress($to);
-        $m->addReplyTo($fromAddr, $fromName);
+        $m->addReplyTo($replyTo !== '' ? $replyTo : $fromAddr, $fromName);
         $m->Subject    = $subject;
         if ($html !== '') {
             $m->isHTML(true);
