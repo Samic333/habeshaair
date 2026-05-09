@@ -56,6 +56,9 @@
   </div>
   <div class="container footer-bottom">
     <p>&copy; <?= date('Y') ?> <?= e(cfg('app.company')) ?>. Charter requests are coordinated through a vetted global network of licensed charter operators and airlines.</p>
+    <p class="footer-attribution" style="margin-top:6px;font-size:0.85em;opacity:0.75;">
+      Operated by <a href="https://samicventures.com" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">Samic Ventures LLC</a>, a Wyoming, USA limited liability company.
+    </p>
     <ul class="footer-meta">
       <li><a href="/privacy.php">Privacy</a></li>
       <li><a href="/terms.php">Terms</a></li>
